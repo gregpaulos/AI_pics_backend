@@ -5,6 +5,7 @@ const cors = require('cors');
 require('dotenv').config()
 
 const photos = require("./routes/photos")
+const ai = require("./routes/ai")
 
 const app = express()
 const port = process.env.PORT || 5000;
@@ -22,6 +23,8 @@ app.get('/', (req, res) => {
 })
 
 app.use('/v1/photos', photos)
+
+app.use('/v1/ai', ai)
 
 app.listen(port, () => console.log('Example app listening on port '+ port))
 
