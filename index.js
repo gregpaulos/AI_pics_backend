@@ -4,7 +4,7 @@ const morgan = require("morgan");
 const cors = require('cors');
 require('dotenv').config()
 
-// const apis = require("./routes/apis")
+const photos = require("./routes/photos")
 
 const app = express()
 const port = process.env.PORT || 5000;
@@ -21,7 +21,7 @@ app.get('/', (req, res) => {
     res.json(greeting)
 })
 
-// app.use('/apis', apis)
+app.use('/v1/photos', photos)
 
 app.listen(port, () => console.log('Example app listening on port '+ port))
 
