@@ -33,4 +33,14 @@ router.get("/random", (req, res, next) => {
     });
 });
 
+router.get("/:id", (request, response, next) => {
+    queries
+      .find_photo_by_id(request.params.id)
+      .then(results => {
+        let list = results.rows;
+        response.json({ results });
+      })
+      .catch(next);
+  });
+
 module.exports = router;
