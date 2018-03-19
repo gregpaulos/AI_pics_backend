@@ -18,7 +18,7 @@ function unsplash() {
     });
 }
 
-function watson(photo) {
+function watson(photo) {    
     let url =
       "https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classify?api_key=" +
       process.env.WATSON +

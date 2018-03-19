@@ -5,7 +5,7 @@ const database = require("../db_connection");
 const send_to_AI = require("../functions/api_calls").send_to_AI;
 
 router.post("/watson", (req, res, next) => {
-  const photo_url = req.body.photo;
+  const photo_url = req.body.photo;  
   const api_id = 2;
   send_to_AI(photo_url, api_id)
     .then(data => {
