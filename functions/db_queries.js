@@ -27,11 +27,35 @@ function all_photos() {
   return database("photos").select("*");
 }
 
-function delete_photo(photo_url) {
-  return database("photos")
-    .where({ photo_url: photo_url })
-    .del();
+
+function all_descriptions() {
+    return database("descriptions").select("*");
 }
+
+function all_photos_with_descriptions() {
+  return database.raw(
+    "SELECT photos.id, photos.photo_url, descriptions.description, apis.api_name FROM photos, descriptions, apis WHERE photos.id=descriptions.photo_id AND descriptions.api_id=apis.id;"
+  );
+}
+
+function one_photo_with_description(id) {
+    return database.raw(
+        "SELECT photos.id, photos.photo_url, descriptions.description, apis.api_name FROM photos, descriptions, apis WHERE photos.id=descriptions.photo_id AND descriptions.api_id=apis.id AND photos.id="+id+";"
+      );
+}
+
+function all_descriptions_for_api(api) {
+    return database.raw(
+        "SELECT photos.id, photos.photo_url, descriptions.description, apis.api_name FROM photos, descriptions, apis WHERE photos.id=descriptions.photo_id AND descriptions.api_id=apis.id AND apis.api_name='"+api+"';"
+      );
+}
+
+
+function delete_photo(photo_url) {
+    return database("photos")
+      .where({ photo_url: photo_url })
+      .del();
+  }
 
 module.exports = {
   add_photo,
@@ -39,5 +63,9 @@ module.exports = {
   find_photo_by_id,
   find_photo_by_url,
   all_photos,
+  all_descriptions,
+  all_photos_with_descriptions,
+  one_photo_with_description,
+  all_descriptions_for_api,
   delete_photo
 };
