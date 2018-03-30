@@ -7,8 +7,25 @@ const helpers = require("../functions/helpers");
 
 router.get("/", (req, res, next) => {
   queries
-    .all_photos()
-    .then(results => {        
+    .all_photos_with_descriptions()
+    .then(resultsRaw => {
+
+      let resultsDict = resultsRaw.rows.reduce((accumulator, current) =>{
+        accumulator[current.id] ?
+          accumulator[current.id].apis[current.api_name] ?
+           accumulator[current.id].apis[current.api_name].push(current.description)
+           :
+           accumulator[current.id].apis[current.api_name] = [current.description]
+        :
+        accumulator[current.id] = {url: current.photo_url, apis: {[current.api_name]: [current.description]}}
+
+        return accumulator
+      }, {})
+      let results = []
+      for (key in resultsDict) {
+          results.push(resultsDict[key])
+      }
+
       res.json({ results });
     })
     .catch(next);
