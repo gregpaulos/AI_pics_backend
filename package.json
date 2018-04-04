@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "aws-sdk": "^2.219.1",
     "clarifai": "^2.6.0",
     "cors": "^2.8.4",
     "dotenv": "^5.0.1",

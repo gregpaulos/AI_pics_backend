@@ -1,29 +1,36 @@
 const express = require("express");
 const router = express.Router();
+const aws = require("aws-sdk");
 const unsplash = require("../functions/api_calls").unsplash;
 const queries = require("../functions/db_queries");
 const database = require("../db_connection");
 const helpers = require("../functions/helpers");
+const S3_BUCKET = process.env.S3_BUCKET;
+aws.config.region = "us-east-1";
 
 router.get("/", (req, res, next) => {
   queries
     .all_photos_with_descriptions()
     .then(resultsRaw => {
+      let resultsDict = resultsRaw.rows.reduce((accumulator, current) => {
+        accumulator[current.id]
+          ? accumulator[current.id].apis[current.api_name]
+            ? accumulator[current.id].apis[current.api_name].push(
+                current.description
+              )
+            : (accumulator[current.id].apis[current.api_name] = [
+                current.description
+              ])
+          : (accumulator[current.id] = {
+              url: current.photo_url,
+              apis: { [current.api_name]: [current.description] }
+            });
 
-      let resultsDict = resultsRaw.rows.reduce((accumulator, current) =>{
-        accumulator[current.id] ?
-          accumulator[current.id].apis[current.api_name] ?
-           accumulator[current.id].apis[current.api_name].push(current.description)
-           :
-           accumulator[current.id].apis[current.api_name] = [current.description]
-        :
-        accumulator[current.id] = {url: current.photo_url, apis: {[current.api_name]: [current.description]}}
-
-        return accumulator
-      }, {})
-      let results = []
+        return accumulator;
+      }, {});
+      let results = [];
       for (key in resultsDict) {
-          results.push(resultsDict[key])
+        results.push(resultsDict[key]);
       }
 
       res.json({ results });
@@ -51,6 +58,44 @@ router.get("/random", (req, res, next) => {
       console.log(error);
       res.send(error);
     });
+});
+
+router.post("/clientupload", (req, res) => {
+  const fileType = req.body.fileType;
+  var count;
+  queries.all_photos().then(results => {
+    count = results.length;
+    const fileName = `photo${count}num`;
+    const s3 = new aws.S3();
+    const s3Params = {
+      Bucket: S3_BUCKET,
+      Key: fileName,
+      Expires: 60,
+      ContentType: fileType,
+      ACL: "public-read"
+    };
+    s3.getSignedUrl("putObject", s3Params, (err, data) => {
+      if (err) {
+        console.log(err);
+        return res.end();
+      }
+      let url = `https://${S3_BUCKET}.s3.amazonaws.com/${fileName}`;
+      const returnData = {
+        signedRequest: data,
+        url: url
+      };
+      queries
+        .add_photo(url)
+        .then(data => {
+          console.log(data);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+      res.write(JSON.stringify(returnData));
+      res.end();
+    });
+  });
 });
 
 router.get("/descriptions", (request, response, next) => {
