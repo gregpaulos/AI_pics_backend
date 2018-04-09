@@ -44,7 +44,7 @@ describe("Photos route", () => {
                 .expect(200)
                 .then(response => {
                     let results = response.body.results
-                    assert.include(results[0].description, "mountainous landforms");
+                    assert.include(results[0].description, "cat");
                     assert.isAtLeast(results.length, 5);
  
                 }).then(done).catch(done)
@@ -58,8 +58,6 @@ describe("Photos route", () => {
                 .then(response => {
                     let results = response.body["photos_and_descriptions"]
                     assert.include(results["1"].google, "cat");
-                    // assert.include(results["1"].google[0], "cat");
-
                 }).then(done).catch(done)
         });
     });

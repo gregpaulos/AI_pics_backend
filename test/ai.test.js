@@ -4,6 +4,7 @@ const app = require("../index");
 const database = require("../db_connection");
 
 // rate-limited, so hit with care
+
 describe("#gets a random photo from unsplash", () => {
   it("unsplash returns an image url", async () => {
     const response = await request(app)

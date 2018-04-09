@@ -8,92 +8,92 @@ exports.seed = function(knex, Promise) {
       var descriptions = [
         {
           id: 1,
-          description: "mountainous landforms",
+          description: "cat",
           photo_id: 1,
           api_id: 1
         },
         {
           id: 2,
-          description: "mountain",
+          description: "mammal",
           photo_id: 1,
           api_id: 1
         },
         {
           id: 3,
-          description: "mountain range",
+          description: "small to medium sized cats",
           photo_id: 1,
           api_id: 1
         },
         {
           id: 4,
-          description: "sky",
+          description: "dragon li",
           photo_id: 1,
           api_id: 1
         },
         {
           id: 5,
-          description: "fell",
+          description: "cat like mammal",
           photo_id: 1,
           api_id: 1
         },
 
         {
           id: 6,
-          description: "mountain range",
+          description: "cat",
           photo_id: 1,
           api_id: 2
         },
         {
           id: 7,
-          description: "nature",
+          description: "feline",
           photo_id: 1,
           api_id: 2
         },
         {
           id: 8,
-          description: "Snowy Mountains",
+          description: "carnivore",
           photo_id: 1,
           api_id: 2
         },
         {
           id: 9,
-          description: "Gray Sky",
+          description: "mammal",
           photo_id: 1,
           api_id: 2
         },
         {
           id: 10,
-          description: "mountain",
+          description: "animal",
           photo_id: 1,
           api_id: 2
         },
         {
           id: 11,
-          description: "no person",
+          description: "cat",
           photo_id: 1,
           api_id: 3
         },
         {
           id: 12,
-          description: "contemporary",
+          description: "cute",
           photo_id: 1,
           api_id: 3
         },
         {
           id: 13,
-          description: "business",
+          description: "fur",
           photo_id: 1,
           api_id: 3
         },
         {
           id: 14,
-          description: "indoors",
+          description: "animal",
           photo_id: 1,
           api_id: 3
         },
         {
           id: 15,
-          description: "step",
+          description: "eye",
           photo_id: 1,
           api_id: 3
         }
