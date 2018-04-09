@@ -33,7 +33,7 @@ describe("Photos route", () => {
                 .get("/v1/photos/1/descriptions")
                 .expect(200)
                 .then(response => {
-                    assert.equal(response.body.photo_and_description.google[0], "fell")
+                    assert.include(response.body.photo_and_description.google, "cat");
                 }).then(done).catch(done)
         });
     });
@@ -57,7 +57,9 @@ describe("Photos route", () => {
                 .expect(200)
                 .then(response => {
                     let results = response.body["photos_and_descriptions"]
-                    assert.include(results["1"].google[0], "fell");
+                    assert.include(results["1"].google, "cat");
+                    // assert.include(results["1"].google[0], "cat");
+
                 }).then(done).catch(done)
         });
     });
