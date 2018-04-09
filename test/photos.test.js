@@ -12,7 +12,7 @@ describe("Photos route", () => {
                 .expect(200)
                 .then(response => {
                     let results = response.body.results
-                    assert.include(results[0].photo_url, "https://images.unsplash.com/photo-1518843025960-d60217f226f5?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjE5NjkzfQ&s=8a28efad39094a7be3a369396332fd02");
+                    assert.include(results[0].url, "https://images.unsplash.com/photo-1518843025960-d60217f226f5?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjE5NjkzfQ&s=8a28efad39094a7be3a369396332fd02");
                     assert.isAtLeast(results.length, 1);
                 }).then(done).catch(done);
         });
